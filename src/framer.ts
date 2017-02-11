@@ -1,7 +1,8 @@
-import { Injector, NgModule, Provider, Type } from '@angular/core';
-import { Route } from '@angular/router';
+import { Injector, NgModule, OpaqueToken, Provider, Type } from '@angular/core';
+import { ActivatedRouteSnapshot, Route, RouterStateSnapshot } from '@angular/router';
 
 import { getAutowireFramer, getAutowireFramerHelper, getAutowireFramerService } from './decorators';
+import { FramerResolver } from './framer.resolver';
 import { Framing } from './framing';
 import { FramingNgModule } from './framing-ng-module';
 
@@ -12,9 +13,19 @@ export abstract class Framer<C> {
   private static _nextId: number = 1;
 
   /**
-   * The route that this framer is attached to, if any.
+   * The route config that this framer is attached to, if any.
    */
-  public route: Route;
+  public routeConfig: Route;
+
+  /**
+   * The route snapshot that this framer is attached to, if any.
+   */
+  public routeSnapshot: ActivatedRouteSnapshot;
+
+  /**
+   * The router state snapshot.
+   */
+  public routerStateSnapshot: RouterStateSnapshot;
 
   /**
    * Internal module for this this.
@@ -74,7 +85,7 @@ export abstract class Framer<C> {
    */
   public frame(framingNgModule: FramingNgModule, route?: Route): void {
     this.framed = true;
-    this.route = route;
+    this.routeConfig = route;
 
     let defaultConfig = this.defaultConfig();
     if (defaultConfig) {
@@ -158,9 +169,22 @@ export abstract class Framer<C> {
 
     // if path specified, add framer to route data
     if (route) {
-      if (!route.data) { route.data = {}; }
       console.log(`Adding framer '${this.framerClass}' to route data under '${this.framerName}'`);
+
+      // the framer needs to go in the route data to be available right away to other resolvers
+      if (!route.data) { route.data = {}; }
       route.data[this.framerName] = this;
+
+      // we also add this resolver so that the routeSnapshot & routerStateSnapshot are populated
+      class FramerResolver {
+        resolve(routeSnapshot: ActivatedRouteSnapshot, state: RouterStateSnapshot): any {
+          self.routeSnapshot = routeSnapshot;
+          self.routerStateSnapshot = state;
+          return self;
+        }
+      }
+      if (!route.resolve) { route.resolve = {}; }
+      route.resolve[this.framerName] = FramerResolver;
     }
 
     if (this.config) {
