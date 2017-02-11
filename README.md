@@ -3,9 +3,9 @@ Framing Core
 
 Framing is a new concept that changes the level of re-usability in Open Source for Enterprise Web Applications using Angular.
 
-It allows you as the develop to create re-usable modules, or slices of modules.
+It allows you as the developer to create re-usable modules, or slices of modules.
 
-Instead of the norm in what's released in open sourcing being individual re-usabilble components, you can now develop and release entire screens that are re-usable.
+Instead of the norm in what's released in open source being individual reusable components, you can now develop and release entire screens that are reusable.
 
 For example, if you add @framing/ng-security to your application you'll have a secure application with login and logout.
 All you need to do is configure the SecurityFramer with what API call it should use to authenticate.
@@ -20,6 +20,6 @@ This concept was born out of the pain of dealing with large amounts of duplicate
 
 The less code you write, the less code you need to test.
 
-Your Framers can continue to evolve and become more proven, stable and secure as you utilize them in future.
+Your Framers can continue to evolve and become more proven, stable and secure as you utilize them for future development.
 
 Instead of that code being written once and used once, you'll continue to use it and improve it.
