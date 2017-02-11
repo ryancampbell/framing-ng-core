@@ -13,15 +13,7 @@ import { FramingComponentsModule, FramingEmptyParentComponent, FramingRootCompon
 import { FramingRootComponentConfig } from './framing-root-component-config';
 import { FramingRouteConfig } from './framing-route-config';
 
-let universalModule: any = BrowserModule;
 const defaultPathMatch = 'prefix';
-
-/**
- *
- */
-export function setUniversalModule(module: any): void {
-  universalModule = module;
-}
 
 /**
  *
@@ -350,7 +342,7 @@ export class FramingNgModule {
 
     if (this._root) {
       m.imports = _.uniqWith(m.imports.concat([
-        universalModule,
+        BrowserModule,
         FormsModule,
       ]), _.isEqual);
 
