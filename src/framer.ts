@@ -2,7 +2,6 @@ import { Injector, NgModule, OpaqueToken, Provider, Type } from '@angular/core';
 import { ActivatedRouteSnapshot, Route, RouterStateSnapshot } from '@angular/router';
 
 import { getAutowireFramer, getAutowireFramerHelper, getAutowireFramerService } from './decorators';
-import { FramerResolver } from './framer.resolver';
 import { Framing } from './framing';
 import { FramingNgModule } from './framing-ng-module';
 
