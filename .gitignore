@@ -1,0 +1,14 @@
+.idea
+node_modules
+*.bak
+*.js#
+*.__#
+*.__~
+*.ht#
+.gi#
+*.js~
+*.ht~
+*.js.map
+*.d.ts
+*.js
+npm-debug.log
